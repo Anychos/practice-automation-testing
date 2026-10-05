@@ -11,43 +11,41 @@ class OrderStatus(StrEnum):
     CANCELED = "canceled"
 
 
-class ItemInOrderSchema(BaseModel):
-    product_id: int = Field(gt=0)
-    quantity: int = Field(gt=0)
-    price: float
-
-
-class ItemForAddInOrder(BaseModel):
+class ItemSchema(BaseModel):
     product_id: int = Field(gt=0)
     quantity: int = Field(gt=0, default=1)
 
 
-class BaseOrderResponseSchema(BaseModel):
+class ItemInOrderSchema(ItemSchema):
+    price: float = Field(ge=0)
+
+
+class OrderSchema(BaseModel):
     id: int = Field(gt=0)
     status: OrderStatus
-    total_price: float
+    total_price: float = Field(ge=0)
     items: list[ItemInOrderSchema]
 
 
 class CreateOrderRequestSchema(BaseModel):
-    items: list[ItemForAddInOrder]
+    items: list[ItemSchema]
 
 
-class CreateOrderResponseSchema(BaseOrderResponseSchema):
+class CreateOrderResponseSchema(OrderSchema):
     pass
 
 
-class GetOrdersResponseSchema(RootModel[list[BaseOrderResponseSchema]]):
+class GetOrdersResponseSchema(RootModel[list[OrderSchema]]):
     pass
 
 
-class GetOrderResponseSchema(BaseOrderResponseSchema):
+class GetOrderResponseSchema(OrderSchema):
     pass
 
 
-class CancelOrderResponseSchema(RootModel[list[BaseOrderResponseSchema]]):
+class CancelOrderResponseSchema(OrderSchema):
     pass
 
 
-class PayOrderResponseSchema(BaseOrderResponseSchema):
+class PayOrderResponseSchema(OrderSchema):
     pass

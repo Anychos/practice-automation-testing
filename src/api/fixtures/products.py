@@ -21,6 +21,10 @@ class CreatedProductFixture(BaseModel):
     def id(self) -> int:
         return self.response.id
 
+    @property
+    def name(self) -> str:
+        return self.response.name
+
 
 @pytest.fixture
 def user_products_client(

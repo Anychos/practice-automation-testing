@@ -11,7 +11,7 @@ from src.api.schemas.authorization import LoginRequestSchema
 from src.api.schemas.orders import (
     CreateOrderRequestSchema,
     CreateOrderResponseSchema,
-    ItemForAddInOrder,
+    ItemSchema,
 )
 
 
@@ -61,9 +61,7 @@ def admin_orders_client(
 def create_order(
     user_orders_client: OrdersAPIClient, create_product: CreatedProductFixture
 ) -> CreatedOrderFixture:
-    request = CreateOrderRequestSchema(
-        items=[ItemForAddInOrder(product_id=create_product.id)]
-    )
+    request = CreateOrderRequestSchema(items=[ItemSchema(product_id=create_product.id)])
     response = user_orders_client.create_order(request=request)
     return CreatedOrderFixture(request=request, response=response)
 

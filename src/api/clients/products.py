@@ -7,6 +7,7 @@ from src.api.schemas.authorization import LoginRequestSchema
 from src.api.schemas.products import (
     CreateProductRequestSchema,
     CreateProductResponseSchema,
+    GetProductsListQueryParamsSchema,
     UpdateProductRequestSchema,
 )
 from src.api.tools.routes import Route
@@ -22,8 +23,12 @@ class ProductsAPIClient(BaseAPIClient):
         response = self.create_product_api(request=request)
         return CreateProductResponseSchema.model_validate_json(response.content)
 
-    def get_products_list_api(self) -> Response:
-        return self.get(url=Route.PRODUCTS)
+    def get_products_list_api(
+        self, params: GetProductsListQueryParamsSchema | None = None
+    ) -> Response:
+        return self.get(
+            url=Route.PRODUCTS, params=params.model_dump(mode="json", exclude_none=True)
+        )
 
     def get_product_api(self, product_id: int) -> Response:
         return self.get(url=f"{Route.PRODUCTS}/{product_id}")

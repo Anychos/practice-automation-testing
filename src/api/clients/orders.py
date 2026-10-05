@@ -30,14 +30,14 @@ class OrdersAPIClient(BaseAPIClient):
         return self.get(url=f"{Route.ORDERS}/{order_id}")
 
     def cancel_order_api(self, order_id: int) -> Response:
-        return self.post(url=f"{Route.ORDERS}/{order_id}")
+        return self.post(url=f"{Route.ORDERS}/{order_id}/cancel")
 
     def cancel_order(self, order_id: int) -> CancelOrderResponseSchema:
         response = self.cancel_order_api(order_id=order_id)
         return CancelOrderResponseSchema.model_validate_json(response.content)
 
     def pay_order_api(self, order_id: int) -> Response:
-        return self.post(url=f"{Route.ORDERS}/{order_id}")
+        return self.post(url=f"{Route.ORDERS}/{order_id}/pay")
 
     def pay_order(self, order_id: int) -> PayOrderResponseSchema:
         response = self.pay_order_api(order_id=order_id)

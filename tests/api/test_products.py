@@ -15,6 +15,7 @@ from src.api.schemas.products import (
     CreateProductRequestSchema,
     CreateProductResponseSchema,
     GetProductResponseSchema,
+    GetProductsListQueryParamsSchema,
     GetProductsListResponseSchema,
     UpdateProductRequestSchema,
     UpdateProductResponseSchema,
@@ -60,7 +61,8 @@ class TestProductsPositive:
         user_products_client: ProductsAPIClient,
         create_product: CreatedProductFixture,
     ) -> None:
-        response = user_products_client.get_products_list_api()
+        params = GetProductsListQueryParamsSchema(name=create_product.name)
+        response = user_products_client.get_products_list_api(params=params)
 
         assert_status_code(actual=response.status_code, expected=HTTPStatus.OK)
         response_data = GetProductsListResponseSchema.model_validate_json(
