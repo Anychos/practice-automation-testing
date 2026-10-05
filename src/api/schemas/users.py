@@ -1,8 +1,6 @@
 from enum import StrEnum
 
-from pydantic import EmailStr, Field, RootModel
-
-from src.api.schemas.base import BaseRequestSchema, BaseResponseSchema
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, RootModel
 
 
 class UserRole(StrEnum):
@@ -10,7 +8,7 @@ class UserRole(StrEnum):
     ADMIN = "admin"
 
 
-class BaseUserResponseSchema(BaseResponseSchema):
+class BaseUserResponseSchema(BaseModel):
     id: int = Field(gt=0)
     email: EmailStr
     name: str = Field(min_length=1, max_length=120)
@@ -29,7 +27,9 @@ class GetUserResponseSchema(BaseUserResponseSchema):
     pass
 
 
-class UpdateUserRequestSchema(BaseRequestSchema):
+class UpdateUserRequestSchema(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     name: str | None = None
     role: UserRole | None = None
 

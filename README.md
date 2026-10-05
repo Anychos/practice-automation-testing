@@ -45,6 +45,18 @@
    ruff format --check .
    ```
 
+6. Установите pre-commit hook, чтобы перед каждым коммитом автоматически сортировались импорты и форматировался Python-код:
+
+   ```powershell
+   python -m pre_commit install
+   ```
+
+   Для ручного запуска hook для всех файлов:
+
+   ```powershell
+   python -m pre_commit run --all-files
+   ```
+
 ## CI
 
 Workflow [api-tests.yml](.github/workflows/api-tests.yml) запускается при `push`, `pull request` и вручную через GitHub Actions. Он скачивает `Anychos/practice-automation-app`, поднимает его тестовый Docker Compose-профиль, ожидает готовности API и затем выполняет проверку стиля и API-тесты.

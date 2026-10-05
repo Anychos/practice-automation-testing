@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout test project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -27,7 +27,7 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Checkout tested application
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: Anychos/practice-automation-app
           ref: main
@@ -62,8 +62,8 @@ jobs:
 
       - name: Check code style
         run: |
-          ruff check .
-          ruff format --check .
+          ruff check config.py conftest.py src tests
+          ruff format --check config.py conftest.py src tests
 
       - name: Run API tests
         run: python -m pytest -q

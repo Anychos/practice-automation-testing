@@ -1,5 +1,7 @@
 from http import HTTPStatus
 
+import pytest
+
 from src.api.assertions.authorization import assert_register_response
 from src.api.assertions.base import assert_status_code
 from src.api.clients.authorization import AuthorizationAPIClient
@@ -13,7 +15,10 @@ from src.api.schemas.authorization import (
 from src.api.schemas.users import UserRole
 
 
+@pytest.mark.auth
+@pytest.mark.regression
 class TestAuthorizationPositive:
+    @pytest.mark.smoke
     def test_register_new_user_returns_201(
         self, authorization_client: AuthorizationAPIClient
     ) -> None:
@@ -26,6 +31,7 @@ class TestAuthorizationPositive:
             request=request, response=response_data, user_role=UserRole.USER
         )
 
+    @pytest.mark.smoke
     def test_login_existing_user_returns_200(
         self,
         authorization_client: AuthorizationAPIClient,

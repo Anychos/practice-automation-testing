@@ -1,0 +1,13 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-imports
+        name: Sort Python imports with Ruff
+        entry: ruff check --select I --fix
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: Format Python code with Ruff
+        entry: ruff format
+        language: system
+        types: [python]

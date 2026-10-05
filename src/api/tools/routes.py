@@ -5,3 +5,5 @@ class Route(StrEnum):
     REGISTER = "/auth/register"
     LOGIN = "/auth/login"
     USERS = "/users"
+    PRODUCTS = "/products"
+    ORDERS = "/orders"

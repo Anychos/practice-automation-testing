@@ -1,5 +1,7 @@
 from http import HTTPStatus
 
+import pytest
+
 from src.api.assertions.base import assert_status_code
 from src.api.assertions.users import (
     assert_get_user_me_response,
@@ -19,7 +21,10 @@ from src.api.schemas.users import (
 from src.api.tools.data_generator import fake
 
 
+@pytest.mark.users
+@pytest.mark.regression
 class TestUsersPositive:
+    @pytest.mark.smoke
     def test_get_current_logged_in_user_returns_200(
         self, registered_user: RegisteredUserFixture, user_users_client: UsersAPIClient
     ) -> None:
@@ -32,6 +37,7 @@ class TestUsersPositive:
             get_user_response=response_data,
         )
 
+    @pytest.mark.smoke
     def test_admin_get_users_list_returns_200(
         self, registered_user: RegisteredUserFixture, admin_users_client: UsersAPIClient
     ) -> None:
@@ -44,6 +50,7 @@ class TestUsersPositive:
             get_users_response=response_data,
         )
 
+    @pytest.mark.smoke
     def test_admin_get_existing_user_info_returns_200(
         self, registered_user: RegisteredUserFixture, admin_users_client: UsersAPIClient
     ) -> None:
@@ -56,6 +63,7 @@ class TestUsersPositive:
             get_user_response=response_data,
         )
 
+    @pytest.mark.smoke
     def test_admin_update_user_returns_200(
         self, registered_user: RegisteredUserFixture, admin_users_client: UsersAPIClient
     ) -> None:
@@ -72,6 +80,7 @@ class TestUsersPositive:
             updated_user_response=response_data,
         )
 
+    @pytest.mark.smoke
     def test_delete_user_returns_204(
         self, registered_user: RegisteredUserFixture, admin_users_client: UsersAPIClient
     ) -> None:
