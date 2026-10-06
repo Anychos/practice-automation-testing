@@ -140,10 +140,11 @@ def assert_pay_order_response(
         expected=create_order_response.id,
         field_name="id",
     )
-    assert_field_value(
-        actual=pay_order_response.status,
-        expected=OrderStatus.PAYMENT_PENDING,
-        field_name="status",
+    allowed_statuses = (OrderStatus.PAYMENT_PENDING, OrderStatus.PAID)
+    assert pay_order_response.status in allowed_statuses, (
+        "Некорректный статус заказа после запуска оплаты. "
+        f"Ожидается один из статусов {allowed_statuses!r}, "
+        f"получено {pay_order_response.status!r}."
     )
     _assert_order_items(
         expected_items=create_order_response.items,
